@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Foes</title>
+    <script>
+        const Q = q => document.querySelector(q);
+        const _Q = q => document.querySelectorAll(q);
+        const getcss = (q, prop) => getComputedStyle(Q(q)).getPropertyValue(prop);
+        const setcss = (q, cssObj) => _Q(q).forEach(elt => Object.assign(elt.style, cssObj));
+    </script>
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            border: 0;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: -5;
+            margin: 0;
+            overflow: hidden
+        }
+        
+        .foe {
+            height: 40px;
+            width: 40px;
+            border-radius: 3px;
+            background: white;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="foe"></div>
+</body>
+<script>
+    setcss('.foe', {
+        position: 'relative',
+        top: '-40px',
+        left: '40%',
+        backgroundColor: 'red'
+    });
+
+    let down = setInterval(function() {
+        setcss('.foe', {
+            top: `${Number(getcss('.foe','top').replace('px',''))+2}px`
+        });
+        if (Number(getcss('.foe', 'bottom').replace('px', '')) <= -innerHeight)
+            clearInterval(down);
+    }, 40);
+
+
+
+    document.body.style.height = window.innerHeight;
+</script>
+
+</html>
